@@ -1,5 +1,6 @@
 package com.example.AplicacionEjercicioMVC.Controller;
 
+import com.example.AplicacionEjercicioMVC.Models.Contrato;
 import com.example.AplicacionEjercicioMVC.Models.Empleado;
 import com.example.AplicacionEjercicioMVC.Service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,13 +31,25 @@ public class EmpleadoController {
         return "Conectado a la tabla Empleados";
     }
 
+    @GetMapping("")
+    public List<Empleado> getAllEmpleados(){
+        return empleadoService.findAll();
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Empleado empleado){
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Empleado empleado){
         Empleado existe = empleadoService.findByEmail(empleado.getEmail());
         if (existe != null && passwordEncoder.matches(empleado.getPassword(), existe.getPassword())){
-            return ResponseEntity.ok("Inicio de sesion exitoso");
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Inicio de sesión exitoso");
+            response.put("empleado", existe);
+
+            return ResponseEntity.ok(response);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales invalidas, el correo ya esta registrado");
+
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("message","Credenciales inválidas, el correo ya está registrado");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 
     @GetMapping("/login")

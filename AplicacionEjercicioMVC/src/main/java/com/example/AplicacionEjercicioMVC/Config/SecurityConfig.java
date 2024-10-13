@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() //Permite el acceso sin autenticación a login y registro
                         .requestMatchers("/contratos/**").permitAll()  //Protege las rutas de contrato
+                        .requestMatchers("/reporte/**").permitAll()  //Protege las rutas de reporte
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  //Indica que no se manejarán sesiones de usario en el servidor

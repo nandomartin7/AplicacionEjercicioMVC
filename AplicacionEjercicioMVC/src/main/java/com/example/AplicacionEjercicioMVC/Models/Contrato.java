@@ -22,7 +22,7 @@ public class Contrato {
     private String descripcion;
 
     @ManyToOne
-    @JoinColumn (name = "idEmpleado")
+    @JoinColumn (name = "idEmpleado", referencedColumnName = "idEmpleado")
     private Empleado empleado;
 
     @Column (name = "Valor Contrato")
@@ -33,17 +33,17 @@ public class Contrato {
 
     @Column (name = "Fecha de Inicio")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaInicio;
 
     @Column (name = "Fecha de Finalizacion")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
     @Column (name = "Fecha Ingreso")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaIngreso;
 
     public Long getIdContrato() {

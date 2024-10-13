@@ -9,6 +9,4 @@ import java.util.List;
 
 public interface ContratoRepository extends JpaRepository<Contrato, Long> {
     Contrato findByCedula(String cedula);
-
-    List<Contrato> findByFechaIngresoBetween(Date fechaInicio, Date fechaFin);
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="app" >
-    <h1 class="principal">CRUD de Clientes</h1>
+    <h1 class="principal">Contratos de Clientes</h1>
     <router-view></router-view>
   </div>
 </template>

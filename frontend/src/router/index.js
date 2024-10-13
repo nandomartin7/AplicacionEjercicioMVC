@@ -1,26 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ListaClientes from '../components/ListaClientes.vue';
-import FormularioCliente from '../components/FormularioCliente.vue';
+import ListaContratos from '../components/ListaContratos.vue';
 import LoginPage from '../components/LoginPage.vue'; // Importa el nuevo componente 
+import BuscarContratos from '@/components/BuscarContratos.vue';
+import FormularioContrato from '@/components/FormularioContrato.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'ListaClientes',
-    component: ListaClientes,
+    name: 'ListaContratos',
+    component: ListaContratos,
     meta: { requiresAuth: true } // Proteger esta ruta
   },
   {
-    path: '/formulario-cliente',
-    name: 'FormularioCliente',
-    component: FormularioCliente,
-    meta: { requiresAuth: true } // Proteger esta ruta
+    path: '/formulario-contrato',
+    name: 'FormularioContrato',
+    component: FormularioContrato,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/filtrar',
+    name: 'BuscarContraros',
+    component: BuscarContratos
   },
   {
     path: '/login',
     name: 'LoginPage',
     component: LoginPage
-  }
+  },
 ];
 
 const router = createRouter({

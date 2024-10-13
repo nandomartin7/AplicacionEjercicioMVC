@@ -1,6 +1,7 @@
 package com.example.AplicacionEjercicioMVC.Controller;
 
 import com.example.AplicacionEjercicioMVC.Models.Contrato;
+import com.example.AplicacionEjercicioMVC.Models.Empleado;
 import com.example.AplicacionEjercicioMVC.Service.ContratoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -53,14 +54,5 @@ public class ContratoController {
     @DeleteMapping("/{cedula}")
     public ResponseEntity<Void> deleteContrato (@PathVariable String cedula){
         return contratoService.delete(cedula) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-    }
-
-    //Aplicacion del video
-    @GetMapping("/filtrar")
-    public ResponseEntity<Map<Long, Long>> contarContratosPorEmpleado(
-            @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
-            @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin){
-        Map<Long, Long> resultado = contratoService.contraContratosPorEmpleado(fechaInicio, fechaFin);
-        return ResponseEntity.ok(resultado);
     }
 }
