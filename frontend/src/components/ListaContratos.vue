@@ -1,19 +1,21 @@
 <template>
     <div>
-        <button @click="cerrarSesion" class="btnCerrarSesion">Cerrar Sesion</button>
-        
-        <p>
+        <div class="btns-container">            
             <button @click="fetchContratos" class="btnVerContratos">Ver todos los contratos</button> 
-        </p>
-
-        <p>
+            
             <router-link to="/formulario-contrato">
                 <button class="btnAgregarContrato">Agregar Contrato</button> 
             </router-link> 
-        </p>
+        
+            <router-link to="/filtrar">
+                <button class="btnFiltrarContrato">Filtrar Contratos</button> 
+            </router-link>
+
+            <button @click="cerrarSesion" class="btnCerrarSesion">Cerrar Sesion</button>
+        </div>
 
         <div>
-            <input v-model="searchId" placeholder="Buscar por Cedula del Contrato"/>
+            <input v-model="searchId" class="searchId" placeholder="Buscar por Cedula del Contrato"/>
             <button @click="buscarContrato" class="btnBuscarContrato">Buscar</button>
         </div>
 
@@ -101,7 +103,7 @@ export default{
     },
     methods: {
         fetchContratos() {
-            axios.get('http://localhost:8080/contratos')
+            axios.get('https://easygoing-analysis-production.up.railway.app/contratos')
             .then(response => {
                 this.contratos = response.data;
             })
@@ -111,7 +113,7 @@ export default{
         },
         buscarContrato(){
             if (this.searchId){
-                axios.get(`http://localhost:8080/contratos/${this.searchId}`)
+                axios.get(`https://easygoing-analysis-production.up.railway.app/contratos/${this.searchId}`)
                 .then(response => {
                     this.contratos = [response.data];
                 })
@@ -130,7 +132,7 @@ export default{
             this.contratoEditando = { ...contrato}; //Clonar el contrato para editarlo
         },
         guardarCambios() {
-            axios.put(`http://localhost:8080/contratos/${this.contratoEditando.cedula}`, this.contratoEditando)
+            axios.put(`https://easygoing-analysis-production.up.railway.app/contratos/${this.contratoEditando.cedula}`, this.contratoEditando)
             .then(response => {
                 // Actualizar el contrato en la lista
                 this.fetchContratos();
@@ -153,7 +155,7 @@ export default{
             this.$router.push('/login'); // Redirigir a la página de login
         },
         eliminarContrato(cedula) {
-            axios.delete(`http://localhost:8080/contratos/${cedula}`)
+            axios.delete(`https://easygoing-analysis-production.up.railway.app/contratos/${cedula}`)
             .then(() => {
                 this.contratos = this.contratos.filter(contrato => contrato.cedula !== cedula);
             })
@@ -172,8 +174,16 @@ export default{
 </script>
 
 <style scoped>
+.btns-container {
+    width: 80%;
+    justify-content: center; /* Centrar el contenedor horizontalmente */
+    margin: auto; /* Centra el contenedor en la página */
+}
+
+
 .btnCerrarSesion{
-    width: 30%; /* Los botones ocupan el % del ancho del contenedor */
+    flex: 1 1 auto;
+    width: 20%; /* Los botones ocupan el % del ancho del contenedor */
     padding: 12px; /* Espacio interior del botón */
     background-color: red; 
     color: black; 
@@ -185,10 +195,12 @@ export default{
     transition: background-color 0.3s, margin 0.3s; /* Transiciones suaves al hacer hover */
     text-align: center; 
     font-weight: bold;
-  }
+}
 
-  .btnVerContratos{
-    width: 30%; /* Los botones ocupan el 100% del ancho del contenedor */
+
+.btnVerContratos{
+    flex: 1 1 auto;
+    width: 25%; /* Los botones ocupan el 100% del ancho del contenedor */
     padding: 12px; /* Espacio interior del botón */
     background-color: rgb(247, 247, 241); 
     color: black;  
@@ -199,10 +211,11 @@ export default{
     cursor: pointer; /* Cambia el cursor a mano al pasar por encima */
     transition: background-color 0.3s, margin 0.3s; /* Transiciones suaves al hacer hover */
     text-align: center; 
-  }
+}
 
-  .btnAgregarContrato{
-    width: 30%; /* Los botones ocupan el 100% del ancho del contenedor */
+.btnAgregarContrato{
+    flex: 1 1 auto;
+    width: 20%; /* Los botones ocupan el 100% del ancho del contenedor */
     padding: 12px; /* Espacio interior del botón */
     background-color: rgb(247, 247, 241); 
     color: black; 
@@ -213,10 +226,36 @@ export default{
     cursor: pointer; /* Cambia el cursor a mano al pasar por encima */
     transition: background-color 0.3s, margin 0.3s; /* Transiciones suaves al hacer hover */
     text-align: center; 
-  }
+}
 
-  .btnBuscarContrato{
-    width: 30%; /* Los botones ocupan el 100% del ancho del contenedor */
+.btnFiltrarContrato{
+    flex: 1 1 auto;
+    width: 20%; /* Los botones ocupan el 100% del ancho del contenedor */
+    padding: 12px; /* Espacio interior del botón */
+    background-color: rgb(247, 247, 241); 
+    color: black; 
+    border: none; 
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 15px; 
+    margin-top: 10px; /* Espacio superior entre botones */
+    cursor: pointer; /* Cambia el cursor a mano al pasar por encima */
+    transition: background-color 0.3s, margin 0.3s; /* Transiciones suaves al hacer hover */
+    text-align: center; 
+}
+
+.searchId{
+  width: 25%; /* Los inputs ocupan el % del contenedor */
+  padding: 12px; /* Espacio interior de los inputs */
+  border: 1px solid #dddddd; /* Borde del input */
+  border-radius: 10px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de la fuente */
+  background-color: #f9f9f9;  
+  transition: border-color 0.3s; 
+  text-align: center; 
+}
+
+.btnBuscarContrato{
+    width: 10%; /* Los botones ocupan el 100% del ancho del contenedor */
     padding: 12px; /* Espacio interior del botón */
     background-color: rgb(247, 247, 241);
     color: black; 
@@ -227,35 +266,36 @@ export default{
     cursor: pointer; /* Cambia el cursor a mano al pasar por encima */
     transition: background-color 0.3s, margin 0.3s; /* Transiciones suaves al hacer hover */
     text-align: center; 
-  }
+}
   
-  h2 {
+h2 {
     text-align: center; 
     color: #333333; 
     font-family: 'Arial', sans-serif; 
     margin-bottom: 20px; /* Espacio inferior del título */
-  }
+}
 
-  table {
-    width: 100%;
+table {
+    width: 80%;
     border-collapse: collapse;
-  }
+    margin: auto;
+}
   
-  th{
+th{
     background-color: aqua;
     border: 1px solid black;
     padding: 8px;
     text-align: left;
-  }
+}
 
-  td{
+td{
     border: 1px solid black;
     padding: 8px;
     text-align: left;
-  }
+}
   
-  .btnVerContrato{
-    width: 20%; /* Los botones ocupan el 100% del ancho del contenedor */
+.btnVerContrato{
+    min-width: auto; /* Los botones ocupan el 100% del ancho del contenedor */
     padding: 12px; /* Espacio interior del botón */
     background-color: rgb(26, 228, 26);
     color: black; 
@@ -266,10 +306,12 @@ export default{
     transition: background-color 0.3s, margin 0.3s; /* Transiciones suaves al hacer hover */
     text-align: center; 
     font-weight: bold;
-  }
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
-  .btnEditarContrato{
-    width: 20%; /* Los botones ocupan el 100% del ancho del contenedor */
+.btnEditarContrato{
+    min-width: auto; /* Los botones ocupan el 100% del ancho del contenedor */
     padding: 12px; /* Espacio interior del botón */
     background-color: rgb(255, 191, 0); 
     color: black; 
@@ -280,10 +322,12 @@ export default{
     transition: background-color 0.3s, margin 0.3s; /* Transiciones suaves al hacer hover */
     text-align: center; 
     font-weight: bold;
-  }
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
-  .btnEliminarContrato{
-    width: 25%; /* Los botones ocupan el 100% del ancho del contenedor */
+.btnEliminarContrato{
+    min-width: 25%; /* Los botones ocupan el 100% del ancho del contenedor */
     padding: 12px; /* Espacio interior del botón */
     background-color: red; 
     color: black; 
@@ -294,9 +338,11 @@ export default{
     transition: background-color 0.3s, margin 0.3s; /* Transiciones suaves al hacer hover */
     text-align: center; 
     font-weight: bold;
-  }
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
-  button {
+button {
     margin-right: 10px;
-  }
+}
 </style>

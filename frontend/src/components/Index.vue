@@ -56,11 +56,11 @@ export default{
 
     login() {
       //Logica para iniciar sesión
-      axios.post('http://localhost:8080/auth/login', this.credentials)
+      axios.post('https://easygoing-analysis-production.up.railway.app/auth/login', this.credentials)
       .then(response =>{
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('empleado', JSON.stringify(response.data.empleado));  // Guardar el objeto empleado como JSON
-        this.$router.push('/'); // Redirigir a la página principal
+        this.$router.push('/lista-contratos'); // Redirigir a la página principal
       })
       .catch(error =>{
         if (error.response) {
@@ -73,7 +73,7 @@ export default{
 
     register() {
       // Lógica para registrarse
-      axios.post('http://localhost:8080/auth/registro', this.newUser)
+      axios.post('https://easygoing-analysis-production.up.railway.app/auth/registro', this.newUser)
       .then(() => {
         this.registerMessage = "Registro exitoso. Puedes iniciar sesión ahora.";
         this.newUser.nombre = ''; //Resetea el campo nombre del empleado

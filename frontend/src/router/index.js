@@ -1,12 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ListaContratos from '../components/ListaContratos.vue';
-import LoginPage from '../components/LoginPage.vue'; // Importa el nuevo componente 
 import BuscarContratos from '@/components/BuscarContratos.vue';
 import FormularioContrato from '@/components/FormularioContrato.vue';
+import Index from '../components/Index.vue';
 
 const routes = [
   {
     path: '/',
+    name: 'LoginPage',
+    component: Index
+  },
+  {
+    path: '/lista-contratos',
     name: 'ListaContratos',
     component: ListaContratos,
     meta: { requiresAuth: true } // Proteger esta ruta
@@ -19,13 +24,8 @@ const routes = [
   },
   {
     path: '/filtrar',
-    name: 'BuscarContraros',
+    name: 'BuscarContratos',
     component: BuscarContratos
-  },
-  {
-    path: '/login',
-    name: 'LoginPage',
-    component: LoginPage
   },
 ];
 

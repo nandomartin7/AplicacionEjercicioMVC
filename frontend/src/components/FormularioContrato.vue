@@ -7,15 +7,17 @@
             <p><input v-model="contrato.descripcion" class="input-field" placeholder="Descripcion del Contrato" required/></p>
             <p><input type="number" v-model="contrato.valor" class="input-field" step="0.01" placeholder="Valor del contrato" required/></p>
             <p>
-               <label>Estado Activo:
-                    <select v-model="contrato.estado">
+               <label class="label">Estado Activo:
+                    <select v-model="contrato.estado" class="input-select">
                         <option :value="true">Activo</option>
                         <option :value="false">Inactivo</option>
                     </select>
                 </label>
             </p>
-            <p><label>Fecha Inicion:<input type="date" v-model="contrato.fechaInicio" required /></label></p>
-            <p><label>Fecha Finalizacion:<input type="date" v-model="contrato.fechaFin" required /></label></p>
+            <p><label class="label">Fecha Inicion: </label></p>
+            <p><input type="date" v-model="contrato.fechaInicio" class="input-date" required></p>
+            <p><label class="label">Fecha Finalizacion:</label></p> 
+            <p><input type="date" v-model="contrato.fechaFin" class="input-date" required ></p>
             
             <button type="submit" class="btnGuardar">Guardar</button>
         </form>
@@ -46,9 +48,9 @@ export default {
             const empleado = JSON.parse(localStorage.getItem('empleado'));
             this.contrato.empleado = empleado;
 
-            axios.post('http://localhost:8080/contratos', this.contrato)
+            axios.post('https://easygoing-analysis-production.up.railway.app/contratos', this.contrato)
             .then(() => {
-                this.$router.push('/'); //Regresa a la lista de clientes luego de guardar
+                this.$router.push('/lista-contratos'); //Regresa a la lista de clientes luego de guardar
             })
             .catch( error => {
                 console.error(error);
@@ -85,6 +87,32 @@ h2{
   background-color: #f9f9f9;  
   transition: border-color 0.3s; 
   text-align: center; 
+}
+
+.input-select{
+  width: 50%; /* Los inputs ocupan el % del contenedor */
+  padding: 12px; /* Espacio interior de los inputs */
+  border: 1px solid #dddddd; /* Borde del input */
+  border-radius: 10px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de la fuente */
+  background-color: #f9f9f9;  
+  transition: border-color 0.3s; 
+  text-align: center; 
+}
+
+.input-date{
+  width: 70%; /* Los inputs ocupan el % del contenedor */
+  padding: 12px; /* Espacio interior de los inputs */
+  border: 1px solid #dddddd; /* Borde del input */
+  border-radius: 10px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de la fuente */
+  background-color: #f9f9f9;  
+  transition: border-color 0.3s; 
+  text-align: center; 
+}
+
+.label{
+    font-size: 18px;
 }
 
 .btnGuardar{
